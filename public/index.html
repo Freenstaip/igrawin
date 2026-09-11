@@ -1,40 +1,72 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Перенаправление...</title>
+
+    <title>Redirecting...</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             min-height: 100vh;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #111;
-            color: #fff;
+
+            background: #111111;
+            color: #ffffff;
+
             font-family: Arial, sans-serif;
             text-align: center;
         }
 
         .container {
-            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
         }
 
         p {
-            color: #aaa;
+            font-size: 16px;
+            line-height: 1.5;
+
+            color: #bbbbbb;
+
             margin-bottom: 25px;
         }
 
         .redirect-button {
             display: inline-block;
+
             padding: 14px 28px;
-            background: #fff;
-            color: #111;
+
+            background: #ffffff;
+            color: #111111;
+
             text-decoration: none;
-            border-radius: 8px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
             font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .redirect-button:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -42,27 +74,262 @@
 <body>
 
 <div class="container">
-    <h1>Перенаправляем вас...</h1>
 
-    <p>
-        Если переход не произошёл автоматически,
-        нажмите кнопку ниже.
+    <h1 id="title">
+        Redirecting...
+    </h1>
+
+    <p id="text">
+        If you are not redirected automatically, click the button below.
     </p>
 
-    <a id="redirectButton" class="redirect-button" href="#">
-        Перейти на сайт
+    <a
+        id="redirectButton"
+        class="redirect-button"
+        href="#"
+    >
+        Go to website
     </a>
+
 </div>
 
+
 <script>
-    // МЕНЯЕШЬ ССЫЛКУ ТОЛЬКО ЗДЕСЬ
+
+    // ==================================================
+    // МЕНЯЕШЬ ТОЛЬКО ЭТУ ССЫЛКУ
+    // ==================================================
+
     const redirectUrl = "https://example.com";
 
-    // Ссылка для кнопки
-    document.getElementById("redirectButton").href = redirectUrl;
 
-    // Мгновенный редирект
+    // ==================================================
+    // ПЕРЕВОДЫ
+    // ==================================================
+
+    const translations = {
+
+        // Русский
+        ru: {
+            title: "Перенаправляем вас...",
+            text: "Если переход не произошёл автоматически, нажмите кнопку ниже.",
+            button: "Перейти на сайт"
+        },
+
+
+        // Украинский
+        uk: {
+            title: "Перенаправляємо вас...",
+            text: "Якщо перехід не відбувся автоматично, натисніть кнопку нижче.",
+            button: "Перейти на сайт"
+        },
+
+
+        // Белорусский
+        be: {
+            title: "Перанакіроўваем вас...",
+            text: "Калі пераход не адбыўся аўтаматычна, націсніце кнопку ніжэй.",
+            button: "Перайсці на сайт"
+        },
+
+
+        // Казахский
+        kk: {
+            title: "Сізді бағыттап жатырмыз...",
+            text: "Егер автоматты түрде өтпесе, төмендегі батырманы басыңыз.",
+            button: "Сайтқа өту"
+        },
+
+
+        // Узбекский
+        uz: {
+            title: "Sizni yo'naltirmoqdamiz...",
+            text: "Agar avtomatik o'tish amalga oshmasa, quyidagi tugmani bosing.",
+            button: "Saytga o'tish"
+        },
+
+
+        // Кыргызский
+        ky: {
+            title: "Сизди багыттап жатабыз...",
+            text: "Эгер автоматтык өтүү болбосо, төмөнкү баскычты басыңыз.",
+            button: "Сайтка өтүү"
+        },
+
+
+        // Таджикский
+        tg: {
+            title: "Шуморо равона карда истодаем...",
+            text: "Агар гузариш ба таври худкор анҷом нашавад, тугмаи зерро пахш кунед.",
+            button: "Ба сайт гузаштан"
+        },
+
+
+        // Армянский
+        hy: {
+            title: "Վերահղում ենք ձեզ...",
+            text: "Եթե ավտոմատ անցումը տեղի չունեցավ, սեղմեք ներքևի կոճակը։",
+            button: "Անցնել կայք"
+        },
+
+
+        // Азербайджанский
+        az: {
+            title: "Sizi yönləndiririk...",
+            text: "Əgər avtomatik keçid baş verməzsə, aşağıdakı düyməni basın.",
+            button: "Sayta keç"
+        },
+
+
+        // Грузинский
+        ka: {
+            title: "გადამისამართებთ...",
+            text: "თუ ავტომატური გადასვლა არ მოხდა, დააჭირეთ ქვემოთ მოცემულ ღილაკს.",
+            button: "საიტზე გადასვლა"
+        },
+
+
+        // Румынский / Молдова
+        ro: {
+            title: "Vă redirecționăm...",
+            text: "Dacă redirecționarea nu are loc automat, apăsați butonul de mai jos.",
+            button: "Mergi la site"
+        },
+
+
+        // Английский
+        en: {
+            title: "Redirecting you...",
+            text: "If you are not redirected automatically, click the button below.",
+            button: "Go to website"
+        },
+
+
+        // Испанский
+        es: {
+            title: "Redirigiéndote...",
+            text: "Si no eres redirigido automáticamente, haz clic en el botón de abajo.",
+            button: "Ir al sitio"
+        },
+
+
+        // Немецкий
+        de: {
+            title: "Sie werden weitergeleitet...",
+            text: "Wenn Sie nicht automatisch weitergeleitet werden, klicken Sie auf die Schaltfläche unten.",
+            button: "Zur Website"
+        },
+
+
+        // Французский
+        fr: {
+            title: "Redirection en cours...",
+            text: "Si vous n'êtes pas redirigé automatiquement, cliquez sur le bouton ci-dessous.",
+            button: "Accéder au site"
+        },
+
+
+        // Турецкий
+        tr: {
+            title: "Yönlendiriliyorsunuz...",
+            text: "Otomatik olarak yönlendirilmezseniz aşağıdaki düğmeye tıklayın.",
+            button: "Siteye git"
+        },
+
+
+        // Португальский
+        pt: {
+            title: "Redirecionando você...",
+            text: "Se você não for redirecionado automaticamente, clique no botão abaixo.",
+            button: "Ir para o site"
+        },
+
+
+        // Арабский
+        ar: {
+            title: "جارٍ إعادة توجيهك...",
+            text: "إذا لم تتم إعادة توجيهك تلقائيًا، اضغط على الزر أدناه.",
+            button: "الذهاب إلى الموقع"
+        },
+
+
+        // Хинди
+        hi: {
+            title: "आपको साइट पर भेजा जा रहा है...",
+            text: "यदि आप स्वचालित रूप से आगे नहीं बढ़े, तो नीचे दिए गए बटन पर क्लिक करें।",
+            button: "साइट पर जाएं"
+        },
+
+
+        // Китайский
+        zh: {
+            title: "正在为您跳转...",
+            text: "如果没有自动跳转，请点击下方按钮。",
+            button: "进入网站"
+        }
+
+    };
+
+
+    // ==================================================
+    // ОПРЕДЕЛЯЕМ ЯЗЫК БРАУЗЕРА
+    // ==================================================
+
+    let language = navigator.language
+        .toLowerCase()
+        .split("-")[0];
+
+
+    // Если язык не найден —
+    // показываем английский
+
+    if (!translations[language]) {
+        language = "en";
+    }
+
+
+    // ==================================================
+    // МЕНЯЕМ ЯЗЫК СТРАНИЦЫ
+    // ==================================================
+
+    document.documentElement.lang = language;
+
+
+    // Для арабского текста включаем RTL
+
+    if (language === "ar") {
+        document.documentElement.dir = "rtl";
+    }
+
+
+    // ==================================================
+    // ВСТАВЛЯЕМ НУЖНЫЙ ПЕРЕВОД
+    // ==================================================
+
+    document.getElementById("title").textContent =
+        translations[language].title;
+
+    document.getElementById("text").textContent =
+        translations[language].text;
+
+    document.getElementById("redirectButton").textContent =
+        translations[language].button;
+
+
+    // ==================================================
+    // ССЫЛКА КНОПКИ
+    // ==================================================
+
+    document.getElementById("redirectButton").href =
+        redirectUrl;
+
+
+    // ==================================================
+    // МГНОВЕННЫЙ РЕДИРЕКТ
+    // ==================================================
+
     window.location.replace(redirectUrl);
+
 </script>
 
 </body>
